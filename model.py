@@ -25,8 +25,37 @@ def argsort(values):
         result.append(sorted_values[i][0])
     return result
 
-# Step 3 - make_op_enums (not yet solved)
-# TODO: implement
+# Step 3 - make_op_enums
+from enum import Enum, auto
+def make_op_enums():
+    # TODO: create four enum classes naming every supported operation kind
+    # phép toán một ngôi: nhận 1 tensor, biến dổi từng 
+    class UnaryOps(Enum):
+        NEG = auto() # đổi dấu x -> -x
+        RELU = auto() # hàm kích hoạt Relu: max(0, x)
+        LOG = auto() # logarit tự nhiên (ln(x))
+        EXP = auto() # hàm mũ cơ số e (e^x)
+        SQRT = auto() # căn bậc 2
+        SIGMOID = auto() # 1 / (1 + (e^(-x)))
+    # phép toán 2 ngôi: nhận 2 tensor cùng or khác kích thước
+    class BinaryOps(Enum):
+        ADD = auto() # cộng
+        SUB = auto() # trừ
+        MUL = auto() # nhân
+        DIV = auto() # chia
+        CMPLT = auto() # so sánh return True False
+        MAX = auto() # max(a, b) từng cặp
+    # thu gọn chiều theo trục chỉ định
+    class ReduceOps(Enum):
+        SUM = auto() # tổng theo trục
+        MAX = auto() # max theo trục
+    # biến dổi không gian
+    class MovementOps(Enum):
+        RESHAPE = auto() # đỏi kích thước từ (2,3) -> (6,)
+        EXPAND = auto() # kéo một kích thước độ dài 1 thành kích thước lớn hơn cho broadcast
+        PERMUTE = auto() # tráo đổi thứ tự các trục
+    
+    return UnaryOps, BinaryOps, ReduceOps, MovementOps
 
 # Step 4 - LazyBuffer (not yet solved)
 # TODO: implement
