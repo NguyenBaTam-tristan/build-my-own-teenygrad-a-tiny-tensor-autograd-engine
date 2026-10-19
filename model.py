@@ -138,8 +138,20 @@ def lazybuffer_binary_e(self, op, other):
     
     return LazyBuffer(res)
 
-# Step 9 - lazybuffer_r (not yet solved)
-# TODO: implement
+# Step 9 - lazybuffer_r
+_, _, ReduceOps, _ = make_op_enums()
+def r(self, op, axis):
+    # TODO: reduce the underlying array along axis (SUM or MAX), keeping reduced dims as size 1
+    data = self._np
+
+    if op == ReduceOps.SUM:
+        res = np.sum(data, axis=axis, keepdims = True)
+    elif op == ReduceOps.MAX:
+        res = np.max(data, axis=axis, keepdims = True)
+    else:
+        raise ValueError(f"Unsupported reduce op: {op}")
+    return LazyBuffer(res)
+LazyBuffer.r=r
 
 # Step 10 - lazybuffer_reshape (not yet solved)
 # TODO: implement
