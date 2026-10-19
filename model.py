@@ -167,8 +167,12 @@ def expand(self, new_shape):
     return LazyBuffer(expanded_data)
 LazyBuffer.expand = expand
 
-# Step 12 - lazybuffer_permute (not yet solved)
-# TODO: implement
+# Step 12 - lazybuffer_permute
+def permute(self, order):
+    # TODO: return a new LazyBuffer with axes reordered according to order
+    permuted_data = np.transpose(self._np, axes = order)
+    return LazyBuffer(permuted_data)
+LazyBuffer.permute = permute
 
 # Step 13 - Function (not yet solved)
 # TODO: implement
