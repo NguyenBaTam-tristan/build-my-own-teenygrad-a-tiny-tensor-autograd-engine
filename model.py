@@ -114,8 +114,29 @@ def e(self, op):
     return LazyBuffer(res)
 LazyBuffer.e = e
 
-# Step 8 - lazybuffer_binary_e (not yet solved)
-# TODO: implement
+# Step 8 - lazybuffer_binary_e
+_, BinaryOps, _, _ = make_op_enums()
+def lazybuffer_binary_e(self, op, other):
+    # TODO: apply a binary elementwise op between two LazyBuffers, return a new LazyBuffer
+    x = self._np
+    y = other._np
+
+    if op == BinaryOps.ADD:
+        res = x+y
+    elif op == BinaryOps.SUB:
+        res = x-y
+    elif op == BinaryOps.MUL:
+        res = x*y 
+    elif op == BinaryOps.DIV:
+        res = x/y 
+    elif op == BinaryOps.CMPLT:
+        res = (x < y).astype(np.float32)
+    elif op == BinaryOps.MAX:
+        res = np.maximum(x, y)
+    else:
+        raise ValueError(f"Unsupported binary op: {op}")
+    
+    return LazyBuffer(res)
 
 # Step 9 - lazybuffer_r (not yet solved)
 # TODO: implement
