@@ -89,8 +89,30 @@ def rand(shape, seed=None):
     arr = rng.random(shape, dtype=np.float32)
     return LazyBuffer(arr)
 
-# Step 7 - lazybuffer_unary_e (not yet solved)
-# TODO: implement
+# Step 7 - lazybuffer_unary_e
+UnaryOps, _, _, _ = make_op_enums()
+def e(self, op):
+    # TODO: apply a unary elementwise op (NEG, RELU, LOG, EXP, SQRT, SIGMOID)
+    # lấy ra class unaryOps từ hàm make_op_enums đã định nghĩa 
+    data = self._np
+    # ánh xạ từng phép toán tương ứng từ hàm numpy
+    if op == UnaryOps.NEG:
+        res = -data
+    elif op == UnaryOps.RELU:
+        res = np.maximum(0, data)
+    elif op == UnaryOps.LOG:
+        res = np.log(data)
+    elif op == UnaryOps.EXP:
+        res = np.exp(data)
+    elif op == UnaryOps.SQRT:
+        res = np.sqrt(data)
+    elif op == UnaryOps.SIGMOID:
+        res = 1 / (1 + np.exp(-data))
+    else:
+        raise ValueError(f"Unsupported unary op: {op}")
+    
+    return LazyBuffer(res)
+LazyBuffer.e = e
 
 # Step 8 - lazybuffer_binary_e (not yet solved)
 # TODO: implement
