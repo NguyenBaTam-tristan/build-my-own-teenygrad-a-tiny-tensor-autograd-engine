@@ -174,8 +174,24 @@ def permute(self, order):
     return LazyBuffer(permuted_data)
 LazyBuffer.permute = permute
 
-# Step 13 - Function (not yet solved)
-# TODO: implement
+# Step 13 - Function
+class Function:
+    def __init__(self, *tensors):
+        # 1. Ghi nhận trực tiếp cờ requires_grad của từng tensor (giữ nguyên True, False, hoặc None)
+        self.needs_input_grad = [t.requires_grad for t in tensors]
+        
+        # 2. Xử lý 3 trạng thái: True > None > False
+        if any(x is True for x in self.needs_input_grad):
+            self.requires_grad = True
+        elif any(x is None for x in self.needs_input_grad):
+            self.requires_grad = None
+        else:
+            self.requires_grad = False
+
+        # 3. CHỈ tạo thuộc tính parents khi gradient thực sự truyền qua (True)
+        # Không tạo nhánh else để hasattr(f, 'parents') trả về False khi không cần grad
+        if self.requires_grad:
+            self.parents = tensors
 
 # Step 14 - function_forward_backward_stubs (not yet solved)
 # TODO: implement
