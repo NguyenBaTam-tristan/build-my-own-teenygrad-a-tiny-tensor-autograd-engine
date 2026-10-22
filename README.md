@@ -1,4 +1,4 @@
-# Build my own teenygrad: A Tiny Tensor Autograd Engine
+# Build Your Own teenygrad: A Tiny Tensor Autograd Engine
 
 Construct a minimal deep learning framework from scratch, layering a lazy numpy-backed buffer, a reverse-mode automatic differentiation engine, a tensor API, and neural network primitives. By the end you train a small MLP on a toy digit dataset, mirroring how real autograd libraries like tinygrad work under the hood.
 
@@ -23,7 +23,7 @@ python scaffold.py
 - [x] **11.** lazybuffer_expand
 - [x] **12.** lazybuffer_permute
 - [x] **13.** Function
-- [ ] **14.** function_forward_backward_stubs
+- [x] **14.** function_forward_backward_stubs
 - [ ] **15.** apply
 - [ ] **16.** Neg
 - [ ] **17.** Relu
