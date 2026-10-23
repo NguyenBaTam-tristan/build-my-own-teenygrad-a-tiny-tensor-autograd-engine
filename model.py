@@ -203,8 +203,28 @@ def function_forward_backward_stubs():
     Function.forward = forward
     Function.backward = backward
 
-# Step 15 - apply (not yet solved)
-# TODO: implement
+# Step 15 - apply
+@classmethod
+def apply(cls, *tensors, **kwargs):
+    # TODO: build the Function, run forward on the input buffers, wrap in a
+    # Tensor, and link out._ctx when a gradient is needed.
+    # Chuẩn bị ghi chép lý lịch các tensor.
+    ctx = cls(*tensors)
+    # Bóc lõi dữ liệu thô lazydata để thực hiện phép toán thực tế.
+    ret = ctx.forward(*[t.lazydata for t in tensors], **kwargs)
+    # Đóng gói kết quả thô thành Tensor mới và kế thừa cờ đạo hàm.
+    out = Tensor(ret, requires_grad = ctx.requires_grad)
+    # Móc sợi dây liên kết ngược để lưu lại nguồn gốc phục vụ backward.
+    if ctx.requires_grad:
+        out._ctx = ctx
+    return out
+
+# Provided: attaches apply onto the Function base class. Leave this as-is.
+for _obj in list(globals().values()):
+    if isinstance(_obj, type):
+        for _k in _obj.__mro__:
+            if _k.__name__ == 'Function':
+                _k.apply = apply
 
 # Step 16 - Neg (not yet solved)
 # TODO: implement
